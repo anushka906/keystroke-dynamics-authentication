@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 import sklearn
 
-from .data import DEFAULT_PATH, load_dataset
+from .data import DEFAULT_PATH, MD5, load_dataset
 from .evaluation import identification_metrics, select_threshold, split_sessions, verification_rates
 from .features import feature_names
 from .models import MODEL_NAMES, make_model
@@ -24,7 +24,8 @@ def run(data_path, output_dir, report_path, names=MODEL_NAMES, seed=42):
     train, validation, test = split_sessions(data)
     columns = feature_names()
     output_dir.mkdir(parents=True, exist_ok=True)
-    report = dict(dataset='CMU DSL Strong Password',
+    benchmark = hashlib.md5(data_path.read_bytes()).hexdigest() == MD5
+    report = dict(dataset='CMU DSL Strong Password' if benchmark else 'User-provided timing data',
                   dataset_sha256=hashlib.sha256(data_path.read_bytes()).hexdigest(),
                   seed=seed, feature_count=len(columns), subjects=int(data.subject.nunique()),
                   split={name: dict(rows=len(part), sessions=sorted(int(s) for s in part.sessionIndex.unique()))
