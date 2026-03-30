@@ -1,0 +1,92 @@
+{
+  "dataset": "CMU DSL Strong Password",
+  "dataset_sha256": "b11d23538b1865fa6ecf4e8b78567caa312e9c1027604bb022fcc6ad7eaa7a33",
+  "seed": 42,
+  "feature_count": 31,
+  "subjects": 51,
+  "split": {
+    "train": {
+      "rows": 12750,
+      "sessions": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "validation": {
+      "rows": 2550,
+      "sessions": [
+        6
+      ]
+    },
+    "test": {
+      "rows": 5100,
+      "sessions": [
+        7,
+        8
+      ]
+    }
+  },
+  "environment": {
+    "python": "3.12.7",
+    "scikit_learn": "1.5.1",
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "joblib": "1.4.2"
+  },
+  "models": {
+    "random_forest": {
+      "identification": {
+        "accuracy": 0.82,
+        "macro_f1": 0.8115942612100754
+      },
+      "verification": {
+        "threshold": 0.085,
+        "false_accepts": 6030,
+        "false_rejects": 333,
+        "genuine_trials": 5100,
+        "impostor_trials": 255000,
+        "false_accept_rate": 0.023647058823529413,
+        "false_reject_rate": 0.06529411764705882
+      },
+      "fit_seconds": 40.588,
+      "estimator": "RandomForestClassifier(n_estimators=200, n_jobs=1, random_state=42)"
+    },
+    "svm": {
+      "identification": {
+        "accuracy": 0.7707843137254902,
+        "macro_f1": 0.7633371488700178
+      },
+      "verification": {
+        "threshold": 0.045,
+        "false_accepts": 7584,
+        "false_rejects": 410,
+        "genuine_trials": 5100,
+        "impostor_trials": 255000,
+        "false_accept_rate": 0.029741176470588236,
+        "false_reject_rate": 0.0803921568627451
+      },
+      "fit_seconds": 40.972,
+      "estimator": "Pipeline(steps=[('standardscaler', StandardScaler()),\n                ('svc', SVC(C=10, probability=True, random_state=42))])"
+    },
+    "logistic_regression": {
+      "identification": {
+        "accuracy": 0.7156862745098039,
+        "macro_f1": 0.7074949772014186
+      },
+      "verification": {
+        "threshold": 0.035,
+        "false_accepts": 10019,
+        "false_rejects": 476,
+        "genuine_trials": 5100,
+        "impostor_trials": 255000,
+        "false_accept_rate": 0.03929019607843137,
+        "false_reject_rate": 0.09333333333333334
+      },
+      "fit_seconds": 5.245,
+      "estimator": "Pipeline(steps=[('standardscaler', StandardScaler()),\n                ('logisticregression',\n                 LogisticRegression(max_iter=3000, random_state=42))])"
+    }
+  }
+}
